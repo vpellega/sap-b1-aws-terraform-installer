@@ -52,12 +52,12 @@ try {
 }
 
 # Salvar log e enviar para o S3
-$logTempFile = "$env:TEMP\setup-log.txt"
+$logTempFile = "$env:TEMP\startup-log.txt"
 $logBuffer | Out-File -FilePath $logTempFile -Encoding UTF8
 
 try {
     Log "Enviando log para o S3..."
-    aws s3 cp $logTempFile s3://sapb1-installer/logs/setup-log.txt
+    aws s3 cp $logTempFile s3://sapb1-installer/logs/startup/startup-log.txt
     Log "Log enviado com sucesso."
 } catch {
     Log "Erro ao enviar log para o S3: $_"
