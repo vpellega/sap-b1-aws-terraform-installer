@@ -7,7 +7,6 @@ Este repositório define a infraestrutura necessária para provisionar automatic
 - Este projeto utiliza **Terraform como IaC**, com foco em modularidade e reutilização.
 - Toda a instalação do SAP B1 é feita em uma instância EC2 com Windows Server.
 - A infraestrutura é efêmera: ideal para testes de 30 dias (prazo da licença trial do SAP).
-- A flag `criar_instancia_ec2` permite desligar ou recriar a instância a qualquer momento, sem destruir o restante da infraestrutura.
 
 ## ⚙️ Recursos Criados
 
@@ -25,6 +24,10 @@ Este projeto separa os recursos em dois módulos principais:
 ### 🏗️ Infraestrutura Fixa
 - Bucket S3 com instaladores e logs
 - Distribuição CloudFront segura para servir instaladores via HTTPS público
+- Tópico SNS para lembrete via SMS
+- Lambda Function para desligar a EC2 com base em tag
+- EventBridge Rule com agendamento (cron)
+- IAM Role e Policy da Lambda
 
 ## 🧠 Estratégias
 
@@ -32,6 +35,40 @@ Este projeto separa os recursos em dois módulos principais:
 - Isso permite recriar a EC2 sempre que necessário, mantendo intactos os instaladores e a distribuição pública.
 - O script de inicialização (`startup.ps1`) é tratado como código e versionado em `scripts/`.
 - Logs do provisionamento são enviados ao S3 para auditoria e troubleshooting.
+- Para evitar cobranças desnecessárias, o projeto envia um lembrete automático via SMS antes de desligar a instância EC2.
+
+## 🛠️ Variáveis Customizáveis (via `.tfvars`)
+
+O projeto permite personalizar diversos parâmetros da infraestrutura por meio de um arquivo `.tfvars`. Isso torna o provisionamento mais flexível, adaptando-se a diferentes cenários e ambientes.
+
+### 🔐 Acesso e Segurança
+
+```hcl
+# Nome do par de chaves SSH para acesso à instância EC2
+key_pair_name = "minha-key-pair"
+```
+
+### 📆 Agendamento (EventBridge)
+
+```hcl
+# Expressão CRON (em UTC) para desligamento automático da EC2 (padrão: 23h BRT)
+schedule_expression_autostop_instances = "cron(0 2 * * ? *)"
+
+# Expressão CRON (em UTC) para envio de alerta SMS antes do desligamento (padrão: 22h45 BRT)
+schedule_expression_reminder = "cron(45 1 * * ? *)"
+```
+
+### 📲 Notificações (SNS)
+
+```hcl
+# Número de telefone (em formato E.164) para receber alertas SMS via SNS
+sns_reminder_phone_number = "+55DD999999999"
+
+# Mensagem personalizada para o alerta SMS de desligamento automático
+reminder_message = "⚠️ Sua instância EC2 com AutoStop=true será desligada às 23h BRT. Remova a tag se estiver usando."
+```
+
+Um template com essas variáveis está disponível no arquivo `terraform.tfvars.example`.
 
 ## 🧪 Observações
 
