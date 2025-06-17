@@ -11,17 +11,25 @@ Este repositório define a infraestrutura necessária para provisionar automatic
 
 ## ⚙️ Recursos Criados
 
+Este projeto separa os recursos em dois módulos principais:
+
+### 🔁 Infraestrutura Efêmera
 - Instância EC2 com Windows Server 2019 e SAP Installer pré-baixado
 - Security Group com RDP liberado
 - IAM Role + Instance Profile para acesso ao bucket S3
-- Bucket S3 com logs e pacote de instaladores
 - Volume EBS (gp3) de 60 GB ou superior, configurável
 - Execução de script PowerShell no boot do Windows:
   - Download automático do `.zip` de instaladores
   - Descompactação e log com envio automático ao S3
 
+### 🏗️ Infraestrutura Fixa
+- Bucket S3 com instaladores e logs
+- Distribuição CloudFront segura para servir instaladores via HTTPS público
+
 ## 🧠 Estratégias
 
+- O projeto adota uma separação entre **infraestrutura efêmera** (recursos temporários como EC2) e **infraestrutura fixa** (recursos persistentes como bucket e CloudFront).
+- Isso permite recriar a EC2 sempre que necessário, mantendo intactos os instaladores e a distribuição pública.
 - O script de inicialização (`startup.ps1`) é tratado como código e versionado em `scripts/`.
 - Logs do provisionamento são enviados ao S3 para auditoria e troubleshooting.
 
@@ -33,11 +41,11 @@ Este repositório define a infraestrutura necessária para provisionar automatic
 
 ## 📦 Instaladores SAP B1
 
-O pacote de instalação do SAP Business One utilizado neste ambiente pode ser encontrado no seguinte bucket S3:
+O pacote de instalação do SAP Business One utilizado neste ambiente pode ser baixado diretamente via HTTPS público (CloudFront):
 
-[s3://sapb1-installer/sap/10.0_FP2405/sapb1.zip](https://s3.console.aws.amazon.com/s3/object/sapb1-installer?prefix=sap/10.0_FP2405/sapb1.zip)
+[https://d3opmwey5n46mf.cloudfront.net/sap/10.0_FP2405/sapb1.zip](https://d3opmwey5n46mf.cloudfront.net/sap/10.0_FP2405/sapb1.zip)
 
-> 💡 Dica: para baixar via terminal com a AWS CLI (com permissões corretas):
+> 💡 Dica: se preferir, você ainda pode baixar via AWS CLI, caso tenha permissões para acessar o bucket diretamente:
 >
 > ```bash
 > aws s3 cp s3://sapb1-installer/sap/10.0_FP2405/sapb1.zip .
