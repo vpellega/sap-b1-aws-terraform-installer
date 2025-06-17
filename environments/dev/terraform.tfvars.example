@@ -1,0 +1,14 @@
+# Nome do par de chaves SSH para acesso à instância EC2
+key_pair_name = "minha-key-pair"
+
+# Número de telefone (em formato E.164) para receber alertas SMS via SNS
+sns_reminder_phone_number = "+55DD999999999"
+
+# Expressão CRON (em UTC) para desligamento automático da EC2 (padrão: 23h BRT)
+schedule_expression_autostop_instances = "cron(0 2 * * ? *)"
+
+# Expressão CRON (em UTC) para envio de alerta SMS antes do desligamento (padrão: 22h45 BRT)
+schedule_expression_reminder = "cron(45 1 * * ? *)"
+
+# Mensagem personalizada para o alerta SMS de desligamento automático
+reminder_message = "⚠️ Sua instância EC2 com AutoStop=true será desligada às 23h BRT. Remova a tag se estiver usando."

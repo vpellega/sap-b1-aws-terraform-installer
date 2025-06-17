@@ -7,7 +7,7 @@ resource "aws_instance" "sap_b1_server" {
   key_name             = var.key_pair_name                 # Par de chaves SSH para acesso
   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
 
-  user_data = base64encode(file("${path.module}/../../scripts/startup.ps1"))
+  user_data = base64encode(file("${path.module}/scripts/ec2/startup.ps1"))
 
   # Configuração de rede
   subnet_id                   = data.aws_subnet.selected_public.id
@@ -27,7 +27,8 @@ resource "aws_instance" "sap_b1_server" {
 
   # Metadados da instância
   tags = {
-    Name = "${var.project_name}-${var.environment}-server"
+    Name     = "${var.project_name}-${var.environment}-server"
+    AutoStop = "true"
   }
 }
 

@@ -1,3 +1,5 @@
+*.zip
+
 # Terraform
 *.tfstate
 *.tfstate.*
@@ -13,6 +15,9 @@ crash.*.log
 .vscode/
 *.swp
 *.swo
+
+# Node.js
+node_modules/
 
 # OS
 .DS_Store
