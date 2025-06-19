@@ -68,7 +68,20 @@ sns_reminder_phone_number = "+55DD999999999"
 reminder_message = "⚠️ Sua instância EC2 com AutoStop=true será desligada às 23h BRT. Remova a tag se estiver usando."
 ```
 
-Um template com essas variáveis está disponível no arquivo `terraform.tfvars.example`.
+### 🌐 IP Dinâmico (Security Group)
+
+```hcl
+# IP público permitido para acessar a instância (ex: detectado automaticamente com curl)
+allowed_ip_cidr = "200.123.45.67/32"
+```
+
+> 💡 Dica: você pode preencher essa variável dinamicamente no momento do apply:
+>
+> ```bash
+> terraform apply -var="allowed_ip_cidr=$(curl -s https://checkip.amazonaws.com)/32"
+> ```
+
+Um exemplo dessa variável está presente no arquivo `terraform.tfvars.example`.
 
 ## 🧪 Observações
 
