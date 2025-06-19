@@ -9,6 +9,10 @@ variable "criar_instancia_ec2" {
   default     = true
 }
 
+variable "allowed_ip_cidr" {
+  description = "IP público permitido para acessar a instância (ex: 200.200.200.200/32)"
+  type        = string
+}
 variable "sns_reminder_phone_number" {
   description = "Número de telefone para envio de SMS antes do desligamento"
   type        = string

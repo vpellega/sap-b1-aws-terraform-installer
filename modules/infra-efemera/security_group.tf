@@ -9,7 +9,7 @@ resource "aws_security_group" "sap_b1_sg" {
     from_port   = 3389
     to_port     = 3389
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.allowed_ip_cidr]
   }
 
   # SAP B1 Server Manager (40000-40010)
@@ -18,7 +18,16 @@ resource "aws_security_group" "sap_b1_sg" {
     from_port   = 40000
     to_port     = 40010
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.allowed_ip_cidr]
+  }
+
+  # SAP B1 Core Services (ex: License Manager, DI API)
+  ingress {
+    description = "SAP B1 Core Services"
+    from_port   = 30000
+    to_port     = 30015
+    protocol    = "tcp"
+    cidr_blocks = [var.allowed_ip_cidr]
   }
 
   # Saída irrestrita

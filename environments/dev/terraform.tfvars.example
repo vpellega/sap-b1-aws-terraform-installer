@@ -12,3 +12,6 @@ schedule_expression_reminder = "cron(45 1 * * ? *)"
 
 # Mensagem personalizada para o alerta SMS de desligamento automático
 reminder_message = "⚠️ Sua instância EC2 com AutoStop=true será desligada às 23h BRT. Remova a tag se estiver usando."
+
+# IP público permitido para acessar a instância (ex: detectado automaticamente com curl)
+allowed_ip_cidr = "200.123.45.67/32"

@@ -3,6 +3,7 @@ module "infra-efemera" {
 
   key_pair_name       = var.key_pair_name
   criar_instancia_ec2 = var.criar_instancia_ec2
+  allowed_ip_cidr     = var.allowed_ip_cidr
   environment         = "dev"
   project_name        = "SAP-B1"
 }

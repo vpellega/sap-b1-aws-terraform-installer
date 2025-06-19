@@ -9,6 +9,11 @@ variable "criar_instancia_ec2" {
   default     = true
 }
 
+variable "allowed_ip_cidr" {
+  description = "IP público permitido para acessar a instância (ex: 200.200.200.200/32)"
+  type        = string
+}
+
 variable "environment" {
   description = "Nome do ambiente (dev, prod, etc)"
   type        = string
@@ -21,8 +26,3 @@ variable "project_name" {
   default     = "SAP-B1"
 }
 
-variable "additional_tags" {
-  description = "Tags adicionais para todos os recursos"
-  type        = map(string)
-  default     = {}
-}
