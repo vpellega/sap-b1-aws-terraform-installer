@@ -4,8 +4,8 @@ module "infra-efemera" {
   key_pair_name       = var.key_pair_name
   criar_instancia_ec2 = var.criar_instancia_ec2
   allowed_ip_cidr     = var.allowed_ip_cidr
-  instance_tag_key    = module.ec2-autostop.instance_tag_key
-  instance_tag_value  = module.ec2-autostop.instance_tag_value
+  instance_tag_key    = module.resources-autostop.instance_tag_key
+  instance_tag_value  = module.resources-autostop.instance_tag_value
   
   sql_engine          = var.sql_engine
   sql_engine_version  = var.sql_engine_version
@@ -22,8 +22,8 @@ module "infra-fixa" {
   environment         = var.environment
 }
 
-module "ec2-autostop" {
-  source = "../../modules/ec2-autostop"
+module "resources-autostop" {
+  source = "../../modules/resources-autostop"
 
   schedule_expression_autostop_instances        = var.schedule_expression_autostop_instances
   schedule_expression_reminder                  = var.schedule_expression_reminder

@@ -1,5 +1,6 @@
 resource "aws_sns_topic" "ec2-autostop-reminder" {
   name = "ec2-autostop-reminder"
+  display_name = "AutoStopReminder"
 }
 
 resource "aws_sns_topic_subscription" "sms_alert" {
