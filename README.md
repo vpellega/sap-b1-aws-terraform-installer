@@ -25,7 +25,8 @@ Este projeto separa os recursos em dois módulos principais:
 - Bucket S3 com instaladores e logs
 - Distribuição CloudFront segura para servir instaladores via HTTPS público
 - Tópico SNS para lembrete via SMS
-- Lambda Function para desligar a EC2 com base em tag
+- Lambda Function para desligar instância EC2 com base em tag
+- Lambda Function para desligar instância RDS com base em tag
 - EventBridge Rule com agendamento (cron)
 - IAM Role e Policy da Lambda
 
@@ -36,6 +37,7 @@ Este projeto separa os recursos em dois módulos principais:
 - O script de inicialização (`startup.ps1`) é tratado como código e versionado em `scripts/`.
 - Logs do provisionamento são enviados ao S3 para auditoria e troubleshooting.
 - Para evitar cobranças desnecessárias, o projeto envia um lembrete automático via SMS antes de desligar a instância EC2.
+- O desligamento automático também se aplica à instância RDS, desde que nenhuma EC2 com AutoStop=true esteja ativa no momento do agendamento
 
 ## 🛠️ Variáveis Customizáveis (via `.tfvars`)
 
