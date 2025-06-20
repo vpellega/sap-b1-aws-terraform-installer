@@ -3,9 +3,13 @@ variable "bucket_name" {
   type        = string
 }
 
+##############################################
+# Projeto e Ambiente
+##############################################
 variable "project_name" {
   description = "Nome do projeto"
   type        = string
+  default     = "SAP-B1"
 }
 
 variable "environment" {

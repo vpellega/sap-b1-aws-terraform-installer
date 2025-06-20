@@ -11,7 +11,25 @@ schedule_expression_autostop_instances = "cron(0 2 * * ? *)"
 schedule_expression_reminder = "cron(45 1 * * ? *)"
 
 # Mensagem personalizada para o alerta SMS de desligamento automático
-reminder_message = "⚠️ Sua instância EC2 com AutoStop=true será desligada às 23h BRT. Remova a tag se estiver usando."
+sns_reminder_message = "⚠️ Sua instância EC2 com AutoStop=true será desligada às 23h BRT. Remova a tag se estiver usando."
 
 # IP público permitido para acessar a instância (ex: detectado automaticamente com curl)
 allowed_ip_cidr = "200.123.45.67/32"
+
+# Engine do SQL Server (ex: sqlserver-ex para Express, sqlserver-se para Standard Edition)
+sql_engine = "sqlserver-ex"
+
+# Versão compatível do SQL Server (ex: 2019 Express)
+sql_engine_version = "15.00.4073.23.v1"
+
+# Tipo da instância RDS (classe e performance)
+sql_instance_class = "db.t3.medium"
+
+# Nome do banco que será criado pelo SLD
+sql_database_name = "SBODemoBR"
+
+# Usuário administrador da instância RDS
+sql_username = "sapadmin"
+
+# Senha do usuário administrador (não sensível neste exemplo)
+sql_password = "S@pB1!23xYz9rQw"

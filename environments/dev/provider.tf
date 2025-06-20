@@ -12,8 +12,8 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Ambiente  = "Desenvolvimento"
-      Projeto   = "SAP-B1"
+      Ambiente  = var.environment
+      Projeto   = var.project_name
       CriadoPor = "Terraform"
     }
   }

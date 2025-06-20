@@ -26,10 +26,10 @@ resource "aws_instance" "sap_b1_server" {
   }
 
   # Metadados da instância
-  tags = {
-    Name     = "${var.project_name}-${var.environment}-server"
-    AutoStop = "true"
-  }
+  tags = merge(
+    { Name = "${var.project_name}-${var.environment}-server" },
+    { (var.instance_tag_key) = var.instance_tag_value }
+  )
 }
 
 resource "null_resource" "debug_boot_logs" {
