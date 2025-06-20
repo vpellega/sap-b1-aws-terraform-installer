@@ -39,49 +39,51 @@ Este projeto separa os recursos em dois módulos principais:
 
 ## 🛠️ Variáveis Customizáveis (via `.tfvars`)
 
-O projeto permite personalizar diversos parâmetros da infraestrutura por meio de um arquivo `.tfvars`. Isso torna o provisionamento mais flexível, adaptando-se a diferentes cenários e ambientes.
-
-### 🔐 Acesso e Segurança
-
 ```hcl
 # Nome do par de chaves SSH para acesso à instância EC2
 key_pair_name = "minha-key-pair"
-```
 
-### 📆 Agendamento (EventBridge)
+# Número de telefone (em formato E.164) para receber alertas SMS via SNS
+sns_reminder_phone_number = "+55DD999999999"
 
-```hcl
 # Expressão CRON (em UTC) para desligamento automático da EC2 (padrão: 23h BRT)
 schedule_expression_autostop_instances = "cron(0 2 * * ? *)"
 
 # Expressão CRON (em UTC) para envio de alerta SMS antes do desligamento (padrão: 22h45 BRT)
 schedule_expression_reminder = "cron(45 1 * * ? *)"
-```
-
-### 📲 Notificações (SNS)
-
-```hcl
-# Número de telefone (em formato E.164) para receber alertas SMS via SNS
-sns_reminder_phone_number = "+55DD999999999"
 
 # Mensagem personalizada para o alerta SMS de desligamento automático
-reminder_message = "⚠️ Sua instância EC2 com AutoStop=true será desligada às 23h BRT. Remova a tag se estiver usando."
-```
+sns_reminder_message = "⚠️ Sua instância EC2 com AutoStop=true será desligada às 23h BRT. Remova a tag se estiver usando."
 
-### 🌐 IP Dinâmico (Security Group)
-
-```hcl
 # IP público permitido para acessar a instância (ex: detectado automaticamente com curl)
 allowed_ip_cidr = "200.123.45.67/32"
+
+# Engine do SQL Server (ex: sqlserver-ex para Express, sqlserver-se para Standard Edition)
+sql_engine = "sqlserver-ex"
+
+# Versão compatível do SQL Server (ex: 2019 Express)
+sql_engine_version = "15.00.4073.23.v1"
+
+# Tipo da instância RDS (classe e performance)
+sql_instance_class = "db.t3.medium"
+
+# Nome do banco que será criado pelo SLD
+sql_database_name = "SBODemoBR"
+
+# Usuário administrador da instância RDS
+sql_username = "sapadmin"
+
+# Senha do usuário administrador (não sensível neste exemplo)
+sql_password = "S@pB1!23xYz9rQw"
 ```
 
-> 💡 Dica: você pode preencher essa variável dinamicamente no momento do apply:
+> 💡 Dica: você pode preencher a variável `allowed_ip_cidr` dinamicamente no momento do apply:
 >
 > ```bash
 > terraform apply -var="allowed_ip_cidr=$(curl -s https://checkip.amazonaws.com)/32"
 > ```
-
-Um exemplo dessa variável está presente no arquivo `terraform.tfvars.example`.
+>
+> Este exemplo (e outros) estão incluídos em `terraform.tfvars.example` para facilitar a configuração inicial.
 
 ## 🧪 Observações
 
@@ -100,3 +102,20 @@ O pacote de instalação do SAP Business One utilizado neste ambiente pode ser b
 > ```bash
 > aws s3 cp s3://sapb1-installer/sap/10.0_FP2405/sapb1.zip .
 > ```
+
+## 💰 Custos Estimados
+
+Este projeto foi pensado para ambientes de teste com baixo custo. Abaixo está uma estimativa aproximada com base em uso esporádico (ex: 3h por dia):
+
+| Recurso                      | Tipo                  | Custo aproximado (mensal) |
+|------------------------------|------------------------|----------------------------|
+| EC2 (Windows t3.medium)      | Sob demanda (3h/dia)   | ~USD 10,00                 |
+| RDS SQL Server Express       | db.t3.medium (3h/dia)  | ~USD 7,92 + USD 2,30 (EBS) |
+| Storage (EBS da EC2)         | 60 GB gp3              | ~USD 6,90                  |
+| SMS (SNS)                    | 1 alerta/dia (Brasil)  | ~USD 0,75                  |
+| S3 (armazenamento)           | 8 GB + logs            | ~USD 0,20                   |
+| **Total estimado**           |                        | **~USD 28,15/mês**         |
+
+> 💡 Os valores podem variar conforme a região AWS e uso real. Se os recursos ficarem ligados 24/7, o custo pode ultrapassar USD 100/mês.
+
+> 💡 Para ambientes mais seguros e permanentes, considere ativar criptografia, backup e monitoramento — com possível acréscimo de custo.
