@@ -43,3 +43,37 @@ resource "aws_security_group" "sap_b1_sg" {
       Name        = "${var.project_name}-${var.environment}-sg"
   }
 }
+
+resource "aws_security_group" "sap_b1_rds_sg" {
+  name        = "${var.project_name}-${var.environment}-rds-sg"
+  description = "Permitir acesso da EC2 ao RDS SQL Server"
+  vpc_id      = data.aws_vpc.default.id
+
+  # SG EC2 Sap Server
+  ingress {
+    description = "Allow EC2 access on SQL Server port"
+    from_port   = 1433
+    to_port     = 1433
+    protocol    = "tcp"
+    security_groups = [aws_security_group.sap_b1_sg.id]
+  }
+
+  ingress {
+    description = "Allow developer IP on SQL Server port"
+    from_port   = 1433
+    to_port     = 1433
+    protocol    = "tcp"
+    cidr_blocks = [var.allowed_ip_cidr]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-rds-sg"
+  }
+}

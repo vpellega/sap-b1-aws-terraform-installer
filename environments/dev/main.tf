@@ -4,16 +4,22 @@ module "infra-efemera" {
   key_pair_name       = var.key_pair_name
   criar_instancia_ec2 = var.criar_instancia_ec2
   allowed_ip_cidr     = var.allowed_ip_cidr
-  environment         = "dev"
-  project_name        = "SAP-B1"
+  instance_tag_key    = module.ec2-autostop.instance_tag_key
+  instance_tag_value  = module.ec2-autostop.instance_tag_value
+  
+  sql_engine          = var.sql_engine
+  sql_engine_version  = var.sql_engine_version
+  sql_username        = var.sql_username
+  sql_password        = var.sql_password
+  
+  environment         = var.environment
 }
 
 module "infra-fixa" {
   source              = "../../modules/infra-fixa"
   
   bucket_name         = "sapb1-installer"
-  environment         = "dev"
-  project_name        = "SAP-B1"
+  environment         = var.environment
 }
 
 module "ec2-autostop" {
