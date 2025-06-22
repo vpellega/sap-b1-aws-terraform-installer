@@ -26,9 +26,3 @@ variable "sns_reminder_phone_number" {
   description = "Número de telefone (E.164) para envio de SMS de lembrete antes do desligamento da EC2"
   type        = string
 }
-
-variable "sns_reminder_message" {
-  description = "Mensagem enviada via SMS no lembrete"
-  type        = string
-  default     = "Alerta: sua instância com AutoStop=true será desligada às 23h!"
-}

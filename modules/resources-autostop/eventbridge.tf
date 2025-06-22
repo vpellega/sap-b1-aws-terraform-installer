@@ -18,8 +18,8 @@ resource "aws_cloudwatch_event_target" "rds_lambda_target" {
   arn       = aws_lambda_function.rds_autostop.arn
 }
 
-resource "aws_lambda_permission" "allow_eventbridge" {
-  statement_id  = "AllowExecutionFromEventBridge"
+resource "aws_lambda_permission" "allow_eventbridge_ec2" {
+  statement_id  = "AllowExecutionFromEventBridgeEC2"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.ec2_autostop.function_name
   principal     = "events.amazonaws.com"
@@ -40,16 +40,20 @@ resource "aws_lambda_permission" "allow_eventbridge_rds" {
 # -------------------------------------
 #
 resource "aws_cloudwatch_event_rule" "reminder" {
-  name                = "ec2-autostop-reminder"
+  name                = "resource-autostop-reminder"
   schedule_expression = var.schedule_expression_reminder
 }
 
-resource "aws_cloudwatch_event_target" "reminder_target" {
+resource "aws_cloudwatch_event_target" "reminder_lambda_target" {
   rule      = aws_cloudwatch_event_rule.reminder.name
-  target_id = "ec2-autostop-reminder-sns"
-  arn       = aws_sns_topic.ec2-autostop-reminder.arn
-  
-  input = jsonencode({
-    default = var.sns_reminder_message
-  })
+  target_id = "reminder-lambda"
+  arn       = aws_lambda_function.reminder.arn
+}
+
+resource "aws_lambda_permission" "allow_eventbridge_reminder" {
+  statement_id  = "AllowExecutionFromEventBridgeReminder"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.reminder.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.reminder.arn
 }

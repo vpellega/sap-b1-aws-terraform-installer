@@ -28,5 +28,4 @@ module "resources-autostop" {
   schedule_expression_autostop_instances        = var.schedule_expression_autostop_instances
   schedule_expression_reminder                  = var.schedule_expression_reminder
   sns_reminder_phone_number                     = var.sns_reminder_phone_number
-  sns_reminder_message                          = var.sns_reminder_message
 }
