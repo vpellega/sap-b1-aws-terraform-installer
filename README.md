@@ -1,3 +1,12 @@
+<h1 align="center">🚀 SAP B1 AWS Installer</h1>
+<p align="center"><i>Infraestrutura efêmera e modular para testes do SAP Business One na AWS</i></p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/terraform-v1.8.2-blue?logo=terraform" />
+  <img src="https://img.shields.io/badge/SAP%20Business%20One-10.0-yellow?logo=sap" />
+  <img src="https://img.shields.io/badge/AWS-cloud-orange?logo=amazon-aws&logoColor=white" />
+</p>
+
 # 🚀 SAP B1 AWS Installer – Terraform Infrastructure
 
 Este repositório define a infraestrutura necessária para provisionar automaticamente um ambiente de testes para o SAP Business One (SAP B1) na AWS. A proposta é garantir que todo o ambiente possa ser **criado, destruído e recriado sob demanda**, com custo mínimo e intervenção reduzida.
@@ -121,3 +130,9 @@ Este projeto foi pensado para ambientes de teste com baixo custo. Abaixo está u
 > 💡 Os valores podem variar conforme a região AWS e uso real. Se os recursos ficarem ligados 24/7, o custo pode ultrapassar USD 100/mês.
 
 > 💡 Para ambientes mais seguros e permanentes, considere ativar criptografia, backup e monitoramento — com possível acréscimo de custo.
+
+---
+
+<p align="center">
+  <sub>🤖 Este README foi gerado com apoio de inteligência artificial.</sub>
+</p>
