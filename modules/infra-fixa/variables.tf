@@ -1,11 +1,8 @@
-variable "bucket_name" {
-  description = "Nome do bucket S3 com os instaladores SAP"
+variable "caller_identity_arn" {
   type        = string
+  description = "ARN do principal (usuário ou role assumida) autorizado a acessar o SNS"
 }
 
-##############################################
-# Projeto e Ambiente
-##############################################
 variable "project_name" {
   description = "Nome do projeto"
   type        = string
@@ -16,3 +13,4 @@ variable "environment" {
   description = "Ambiente (dev, prod, etc)"
   type        = string
 }
+

@@ -11,8 +11,8 @@ resource "aws_cloudfront_distribution" "sapb1_distribution" {
   default_root_object = ""
 
   origin {
-    domain_name = "${var.bucket_name}.s3.amazonaws.com"
-    origin_id   = "S3-${var.bucket_name}"
+    domain_name = "${aws_s3_bucket.sapb1_installer.id}.s3.amazonaws.com"
+    origin_id   = "S3-${aws_s3_bucket.sapb1_installer.id}"
 
     origin_access_control_id = aws_cloudfront_origin_access_control.oac_s3.id
   }
@@ -20,7 +20,7 @@ resource "aws_cloudfront_distribution" "sapb1_distribution" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-${var.bucket_name}"
+    target_origin_id = "S3-${aws_s3_bucket.sapb1_installer.id}"
 
     viewer_protocol_policy = "redirect-to-https"
 

@@ -1,7 +1,6 @@
 module "infra-efemera" {
   source              = "../../modules/infra-efemera"
 
-  key_pair_name       = var.key_pair_name
   criar_instancia_ec2 = var.criar_instancia_ec2
   allowed_ip_cidr     = var.allowed_ip_cidr
   instance_tag_key    = module.resources-autostop.instance_tag_key
@@ -16,10 +15,11 @@ module "infra-efemera" {
 }
 
 module "infra-fixa" {
-  source              = "../../modules/infra-fixa"
+  source                                      = "../../modules/infra-fixa"
   
-  bucket_name         = "sapb1-installer"
-  environment         = var.environment
+  caller_identity_arn                         = data.aws_iam_session_context.current.issuer_arn
+  
+  environment                                 = var.environment
 }
 
 module "resources-autostop" {
@@ -28,4 +28,5 @@ module "resources-autostop" {
   schedule_expression_autostop_instances        = var.schedule_expression_autostop_instances
   schedule_expression_reminder                  = var.schedule_expression_reminder
   sns_reminder_phone_number                     = var.sns_reminder_phone_number
+  sns_reminder_message                          = var.sns_reminder_message
 }
