@@ -30,7 +30,7 @@ try {
 $zipPath = "C:\Installers\sapb1.zip"
 try {
     Log "Iniciando download do SAP B1 .zip..."
-    aws s3 cp s3://sapb1-installer/sap/10.0_FP2405/sapb1.zip $zipPath
+    aws s3 cp s3://sapb1-installer/sap/10.0_FP2405/B11000_2405-70004131.zip $zipPath
     Log "Download concluído: $zipPath"
 } catch {
     Log "Erro ao baixar o .zip do SAP B1: $_"

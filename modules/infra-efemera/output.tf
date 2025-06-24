@@ -13,11 +13,6 @@ output "private_ip" {
   value       = var.criar_instancia_ec2 ? aws_instance.sap_b1_server[0].private_ip : null
 }
 
-output "security_group_id" {
-  description = "ID do Security Group criado"
-  value       = aws_security_group.sap_b1_sg.id
-}
-
 output "iam_role_arn" {
   description = "ARN da IAM Role criada"
   value       = aws_iam_role.ec2_s3_access_role.arn
@@ -28,15 +23,6 @@ output "subnet_details" {
   value = {
     subnet_id         = data.aws_subnet.selected_public.id
     availability_zone = data.aws_subnet.selected_public.availability_zone
-    vpc_id           = data.aws_vpc.default.id
+    vpc_id            = data.aws_vpc.default.id
   }
-}
-
-output "connection_info" {
-  description = "Informações para conexão RDP"
-  value = var.criar_instancia_ec2 ? {
-    rdp_command = "mstsc /v:${aws_instance.sap_b1_server[0].public_ip}:3389"
-    public_ip   = aws_instance.sap_b1_server[0].public_ip
-    key_pair    = var.key_pair_name
-  } : null
 }
