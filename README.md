@@ -51,9 +51,6 @@ Este projeto separa os recursos em dois módulos principais:
 ## 🛠️ Variáveis Customizáveis (via `.tfvars`)
 
 ```hcl
-# Nome do par de chaves SSH para acesso à instância EC2
-key_pair_name = "minha-key-pair"
-
 # Número de telefone (em formato E.164) para receber alertas SMS via SNS
 sns_reminder_phone_number = "+55DD999999999"
 
@@ -99,8 +96,9 @@ sql_password = "S@pB1!23xYz9rQw"
 ## 🧪 Observações
 
 - A renovação da licença do SAP exige a **recriação da instância** (30 dias). O restante da infraestrutura é mantido.
-
 - Em alguns testes, o script `startup.ps1` não foi executado automaticamente via `user_data`, sendo necessário acessá-lo manualmente via RDP após o boot da instância. Isso pode ocorrer por limitações do processo de inicialização do Windows.
+- Deverá ser feito o upload do .zip com os instaladores manualmente ao bucket S3, isto devido ao seu tamanho de ~8GB.
+- O terraform espera encontrar a key pair (.pub) no diretório `modules/infra-efemera/keys` 
 
 ## 📦 Instaladores SAP B1
 
