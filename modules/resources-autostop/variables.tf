@@ -16,6 +16,12 @@ variable "schedule_expression_autostop_instances" {
   default     = "cron(0 2 * * ? *)" # 23h BRT
 }
 
+variable "schedule_expression_autostop_rds" {
+  description = "Expressão cron para agendamento do desligamento do RDS (UTC)"
+  type        = string
+  default     = "cron(5 2 * * ? *)" # 23:05 BRT
+}
+
 variable "schedule_expression_reminder" {
   description = "Expressão cron para agendamento do desligamento (UTC)"
   type        = string
@@ -31,3 +37,4 @@ variable "sns_reminder_message" {
   description = "Mensagem enviada via SMS no lembrete"
   type        = string
 }
+
