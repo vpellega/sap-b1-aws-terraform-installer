@@ -19,11 +19,30 @@ try {
         Invoke-WebRequest "https://awscli.amazonaws.com/AWSCLIV2.msi" -OutFile $cliInstaller
         Start-Process "msiexec.exe" -ArgumentList "/i `"$cliInstaller`" /qn" -Wait
         Log "AWS CLI instalado com sucesso."
+        $env:Path += ";$env:ProgramFiles\Amazon\AWSCLIV2"
+        $awsVersion = aws --version 2>&1
+        Log "Versão da AWS CLI detectada: $awsVersion"
     } else {
         Log "AWS CLI já está disponível."
     }
 } catch {
     Log "Erro ao instalar AWS CLI: $_"
+}
+
+# Instalar ODBC Driver 17 for SQL Server se necessário
+try {
+    $odbcDriver = Get-OdbcDriver | Where-Object { $_.Name -eq "ODBC Driver 17 for SQL Server" }
+    if (-not $odbcDriver) {
+        Log "ODBC Driver 17 for SQL Server não encontrado. Iniciando download e instalação..."
+        $odbcInstaller = "$env:TEMP\msodbcsql17.msi"
+        Invoke-Expression "aws s3 cp s3://sapb1-installer/prereq/msodbcsql17.msi `"$odbcInstaller`""
+        Start-Process "msiexec.exe" -ArgumentList "/i `"$odbcInstaller`" /quiet /norestart IACCEPTMSODBCSQLLICENSETERMS=YES" -Wait
+        Log "ODBC Driver 17 for SQL Server instalado com sucesso."
+    } else {
+        Log "ODBC Driver 17 for SQL Server já está disponível."
+    }
+} catch {
+    Log "Erro ao instalar ODBC Driver 17: $_"
 }
 
 # Baixar o .zip do SAP B1
