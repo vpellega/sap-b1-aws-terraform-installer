@@ -116,16 +116,17 @@ O pacote de instalação do SAP Business One utilizado neste ambiente pode ser b
 
 Este projeto foi pensado para ambientes de teste com baixo custo. Abaixo está uma estimativa aproximada com base em uso esporádico (ex: 3h por dia):
 
-| Recurso                      | Tipo                  | Custo aproximado (mensal) |
-|------------------------------|------------------------|----------------------------|
-| EC2 (Windows t3.medium)      | Sob demanda (3h/dia)   | ~USD 10,00                 |
-| RDS SQL Server Express       | db.t3.medium (3h/dia)  | ~USD 7,92 + USD 2,30 (EBS) |
-| Storage (EBS da EC2)         | 60 GB gp3              | ~USD 6,90                  |
-| SMS (SNS)                    | 1 alerta/dia (Brasil)  | ~USD 0,75                  |
-| S3 (armazenamento)           | 8 GB + logs            | ~USD 0,20                   |
-| **Total estimado**           |                        | **~USD 28,15/mês**         |
+| Recurso                                  | Tipo                      | Custo aproximado (mensal) |
+|-----------------------------------------|---------------------------|---------------------------|
+| EC2 (Windows t3.medium - Server)        | Sob demanda (3h/dia)      | ~USD 10,00                |
+| EC2 (Windows t3.small - Client)          | Sob demanda (3h/dia)      | ~USD 6,50                 |
+| EC2 (Windows t3.small - SQL Server Express) | Sob demanda (3h/dia)      | ~USD 6,50                 |
+| Storage (EBS das EC2s)                   | 1x 60 GB (root) + 2x 50 GB gp3 | ~USD 14,50                |
+| SMS (SNS)                               | 1 alerta/dia (Brasil)     | ~USD 0,75                 |
+| S3 (armazenamento)                      | 8 GB + logs               | ~USD 0,20                 |
+| **Total estimado**                      |                           | **~USD 35,25/mês**        |
 
-> 💡 Os valores podem variar conforme a região AWS e uso real. Se os recursos ficarem ligados 24/7, o custo pode ultrapassar USD 100/mês.
+> 💡 Os valores podem variar conforme a região AWS e uso real.
 
 > 💡 Para ambientes mais seguros e permanentes, considere ativar criptografia, backup e monitoramento — com possível acréscimo de custo.
 
