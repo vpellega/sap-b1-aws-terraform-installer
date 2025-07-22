@@ -1,7 +1,7 @@
 resource "aws_eip" "sap_b1_client_eip" {
   count = var.criar_instancia_ec2 ? 1 : 0
 
-  domain = "vpc"
+  domain     = "vpc"
   depends_on = [aws_instance.sap_b1_client]
 }
 

@@ -7,9 +7,9 @@ output "ip_publico_sap_b1" {
 output "debug_instance_info" {
   description = "Informações de debug da instância"
   value = module.infra-efemera.public_ip != null ? {
-    instance_id     = module.infra-efemera.instance_id
-    public_ip       = module.infra-efemera.public_ip
-    private_ip      = module.infra-efemera.private_ip
+    instance_id = module.infra-efemera.instance_id
+    public_ip   = module.infra-efemera.public_ip
+    private_ip  = module.infra-efemera.private_ip
   } : null
 }
 

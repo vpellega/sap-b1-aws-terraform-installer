@@ -45,13 +45,13 @@ resource "aws_security_group" "sap_b1_server_sg" {
   }
 
   ingress {
-    description = "SMB para acesso a pasta B1SHR"
-    from_port   = 445
-    to_port     = 445
-    protocol    = "tcp"
+    description     = "SMB para acesso a pasta B1SHR"
+    from_port       = 445
+    to_port         = 445
+    protocol        = "tcp"
     security_groups = [aws_security_group.sap_b1_client_sg.id]
   }
-  
+
   # Saída irrestrita
   egress {
     description = "All outbound traffic"
@@ -62,7 +62,7 @@ resource "aws_security_group" "sap_b1_server_sg" {
   }
 
   tags = {
-      Name      = "${var.project_name}-${var.environment}-server-sg"
+    Name = "${var.project_name}-${var.environment}-server-sg"
   }
 }
 
@@ -90,7 +90,7 @@ resource "aws_security_group" "sap_b1_client_sg" {
   }
 
   tags = {
-    Name      = "${var.project_name}-${var.environment}-client-sg"
+    Name = "${var.project_name}-${var.environment}-client-sg"
   }
 }
 
@@ -101,10 +101,10 @@ resource "aws_security_group" "sap_b1_rds_sg" {
 
   # SG EC2 Sap Server
   ingress {
-    description = "Allow EC2 access on SQL Server port"
-    from_port   = 1433
-    to_port     = 1433
-    protocol    = "tcp"
+    description     = "Allow EC2 access on SQL Server port"
+    from_port       = 1433
+    to_port         = 1433
+    protocol        = "tcp"
     security_groups = [aws_security_group.sap_b1_server_sg.id]
   }
 
@@ -129,9 +129,9 @@ resource "aws_security_group" "sap_b1_rds_sg" {
 }
 
 resource "aws_security_group" "sql_express_sg" {
-  name          = "${var.project_name}-${var.environment}-sql-server-ex-sg"
-  description   = "Permite RDP e acesso à porta 1433 do SQL Server"
-  vpc_id        = data.aws_vpc.default.id
+  name        = "${var.project_name}-${var.environment}-sql-server-ex-sg"
+  description = "Permite RDP e acesso à porta 1433 do SQL Server"
+  vpc_id      = data.aws_vpc.default.id
 
   ingress {
     description = "RDP"
@@ -148,7 +148,7 @@ resource "aws_security_group" "sql_express_sg" {
     protocol    = "tcp"
     cidr_blocks = [var.allowed_ip_cidr]
   }
-  
+
   ingress {
     description = "SQL Server"
     from_port   = 1433

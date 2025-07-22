@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "resource-autostop-reminder" {
-  name = "resource-autostop-reminder"
+  name         = "resource-autostop-reminder"
   display_name = "AutoStopReminder"
 }
 

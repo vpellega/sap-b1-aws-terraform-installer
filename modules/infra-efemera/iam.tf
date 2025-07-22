@@ -14,9 +14,9 @@ resource "aws_iam_role" "ec2_s3_access_role" {
       }
     ]
   })
-  
+
   tags = {
-    Name        = "${var.project_name}-${var.environment}-role"
+    Name = "${var.project_name}-${var.environment}-role"
   }
 }
 

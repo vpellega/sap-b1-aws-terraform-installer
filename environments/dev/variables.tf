@@ -77,11 +77,11 @@ variable "sql_password" {
 variable "project_name" {
   description = "Nome do projeto"
   type        = string
-  default = "sap-b1"
+  default     = "sap-b1"
 }
 
 variable "environment" {
   description = "Ambiente (dev, prod, etc)"
   type        = string
-  default = "dev"
+  default     = "dev"
 }

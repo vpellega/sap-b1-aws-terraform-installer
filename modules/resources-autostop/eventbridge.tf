@@ -53,8 +53,8 @@ resource "aws_cloudwatch_event_target" "reminder_lambda_target" {
   rule      = aws_cloudwatch_event_rule.reminder.name
   target_id = "reminder-lambda"
   arn       = aws_lambda_function.reminder.arn
-  
-  input     = jsonencode({
+
+  input = jsonencode({
     message = var.sns_reminder_message
   })
 }

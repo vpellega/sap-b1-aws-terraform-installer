@@ -17,7 +17,7 @@ resource "aws_iam_role" "stop_resources_lambda_role" {
 }
 
 resource "aws_iam_policy" "stop_resources_lambda_policy" {
-  name   = "stop-resources-lambda-policy"
+  name = "stop-resources-lambda-policy"
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -69,7 +69,7 @@ resource "aws_iam_role" "reminder_lambda_role" {
 }
 
 resource "aws_iam_policy" "reminder_lambda_policy" {
-  name   = "reminder-lambda-policy"
+  name = "reminder-lambda-policy"
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -104,19 +104,19 @@ resource "aws_iam_role_policy_attachment" "attach_reminder_lambda_policy" {
 # IAM: Policy do SNS (permite EventBridge publicar)
 ###############################################
 resource "aws_sns_topic_policy" "resource_autostop_reminder_policy" {
-  arn    = aws_sns_topic.resource-autostop-reminder.arn
+  arn = aws_sns_topic.resource-autostop-reminder.arn
 
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
-        Sid       = "AllowEventBridgeToPublish",
-        Effect    = "Allow",
+        Sid    = "AllowEventBridgeToPublish",
+        Effect = "Allow",
         Principal = {
           Service = "events.amazonaws.com"
         },
-        Action    = "SNS:Publish",
-        Resource  = aws_sns_topic.resource-autostop-reminder.arn,
+        Action   = "SNS:Publish",
+        Resource = aws_sns_topic.resource-autostop-reminder.arn,
         Condition = {
           ArnEquals = {
             "AWS:SourceArn" = aws_cloudwatch_event_rule.reminder.arn

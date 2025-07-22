@@ -3,20 +3,20 @@ resource "aws_instance" "sap_b1_server" {
 
   # Configurações básicas da instância
   ami                  = data.aws_ami.windows_2019_base.id
-  instance_type        = "t3.large"                        
-  key_name             = aws_key_pair.sap_key.key_name      
+  instance_type        = "t3.large"
+  key_name             = aws_key_pair.sap_key.key_name
   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
 
   user_data = base64encode(file("${path.module}/scripts/ec2/startup.ps1"))
 
   # Configuração de rede
   subnet_id                   = data.aws_subnet.selected_public.id
-  associate_public_ip_address = true                        
+  associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.sap_b1_server_sg.id]
 
   root_block_device {
     volume_type           = "gp3"
-    volume_size           = 60                              
+    volume_size           = 60
     delete_on_termination = true
   }
 
@@ -36,8 +36,8 @@ resource "aws_instance" "sap_b1_client" {
   subnet_id                   = data.aws_subnet.selected_public.id
   associate_public_ip_address = false
 
-  vpc_security_group_ids      = [aws_security_group.sap_b1_server_sg.id]
-  iam_instance_profile        = aws_iam_instance_profile.ec2_instance_profile.name
+  vpc_security_group_ids = [aws_security_group.sap_b1_server_sg.id]
+  iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
 
   root_block_device {
     volume_size           = 50
@@ -60,13 +60,13 @@ resource "aws_instance" "sql_server_express" {
   subnet_id                   = data.aws_subnet.selected_public.id
   associate_public_ip_address = true
 
-  vpc_security_group_ids      = [aws_security_group.sql_express_sg.id]
+  vpc_security_group_ids = [aws_security_group.sql_express_sg.id]
 
-  iam_instance_profile        = aws_iam_instance_profile.ec2_instance_profile.name
-  
+  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
+
   root_block_device {
-    volume_size = 50
-    volume_type = "gp3"
+    volume_size           = 50
+    volume_type           = "gp3"
     delete_on_termination = true
   }
 
@@ -78,7 +78,7 @@ resource "aws_instance" "sql_server_express" {
 
 resource "null_resource" "debug_boot_logs" {
   count = var.criar_instancia_ec2 ? 1 : 0
-  
+
   provisioner "local-exec" {
     command = <<EOT
       aws ec2 get-console-output \

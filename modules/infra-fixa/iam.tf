@@ -5,12 +5,12 @@ resource "aws_s3_bucket_policy" "allow_cloudfront" {
     Version = "2012-10-17",
     Statement = [
       {
-        Sid       = "AllowCloudFrontServicePrincipalReadOnly"
-        Effect    = "Allow"
+        Sid    = "AllowCloudFrontServicePrincipalReadOnly"
+        Effect = "Allow"
         Principal = {
           Service = "cloudfront.amazonaws.com"
         }
-        Action = "s3:GetObject"
+        Action   = "s3:GetObject"
         Resource = "${aws_s3_bucket.sapb1_installer.arn}/*"
         Condition = {
           StringEquals = {
@@ -19,12 +19,12 @@ resource "aws_s3_bucket_policy" "allow_cloudfront" {
         }
       },
       {
-        Sid       = "AllowCloudFrontLogging"
-        Effect    = "Allow"
+        Sid    = "AllowCloudFrontLogging"
+        Effect = "Allow"
         Principal = {
           Service = "cloudfront.amazonaws.com"
         }
-        Action = "s3:PutObject"
+        Action   = "s3:PutObject"
         Resource = "${aws_s3_bucket.sapb1_installer.arn}/logs/cloudfront/*"
       },
       {
