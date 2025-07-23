@@ -1,0 +1,10 @@
+# Copy this file to terraform.tfvars and fill in your desired names.
+# The s3_bucket_name MUST be globally unique.
+s3_bucket_name      = "sap-b1-installer-tfstate-vcp"
+dynamodb_table_name = "sap-b1-installer-tfstate-lock"
+tags = {
+  Project     = "SAP B1 Installer"
+  ManagedBy   = "Terraform"
+  Purpose     = "Terraform State Backend"
+  Environment = "Global"
+}
