@@ -130,7 +130,7 @@ resource "aws_security_group" "sap_b1_rds_sg" {
 
 resource "aws_security_group" "sql_express_sg" {
   name        = "${var.project_name}-${var.environment}-sql-server-ex-sg"
-  description = "Permite RDP e acesso à porta 1433 do SQL Server"
+  description = "Allow access on RDP and SQL Server port"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
@@ -150,19 +150,19 @@ resource "aws_security_group" "sql_express_sg" {
   }
 
   ingress {
-    description = "SQL Server"
-    from_port   = 1433
-    to_port     = 1433
-    protocol    = "tcp"
-    cidr_blocks = [aws_security_group.sap_b1_server_sg.id]
+    description     = "Allow SAP B1 Server access on SQL Server port"
+    from_port       = 1433
+    to_port         = 1433
+    protocol        = "tcp"
+    security_groups = [aws_security_group.sap_b1_server_sg.id]
   }
 
   ingress {
-    description = "SQL Server"
-    from_port   = 1433
-    to_port     = 1433
-    protocol    = "tcp"
-    cidr_blocks = [aws_security_group.sap_b1_client_sg.id]
+    description     = "Allow SAP B1 Client access on SQL Server port"
+    from_port       = 1433
+    to_port         = 1433
+    protocol        = "tcp"
+    security_groups = [aws_security_group.sap_b1_client_sg.id]
   }
 
   egress {
