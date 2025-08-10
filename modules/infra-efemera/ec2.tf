@@ -25,6 +25,12 @@ resource "aws_instance" "sap_b1_server" {
     { Name = "${var.project_name}-${var.environment}-server" },
     { (var.instance_tag_key) = var.instance_tag_value }
   )
+
+  lifecycle {
+    ignore_changes = [
+      associate_public_ip_address,
+    ]
+  }
 }
 
 resource "aws_instance" "sap_b1_client" {
@@ -49,6 +55,12 @@ resource "aws_instance" "sap_b1_client" {
     { Name = "${var.project_name}-${var.environment}-client" },
     { (var.instance_tag_key) = var.instance_tag_value }
   )
+
+  lifecycle {
+    ignore_changes = [
+      associate_public_ip_address,
+    ]
+  }
 }
 
 resource "aws_instance" "sql_server_express" {
@@ -74,6 +86,12 @@ resource "aws_instance" "sql_server_express" {
     { Name = "${var.project_name}-${var.environment}-sql" },
     { (var.instance_tag_key) = var.instance_tag_value }
   )
+
+  lifecycle {
+    ignore_changes = [
+      associate_public_ip_address,
+    ]
+  }
 }
 
 resource "null_resource" "debug_boot_logs" {
